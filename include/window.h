@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QGraphicsScene>
+#include <QDesktopServices>
+#include <QUrl>
 
 // Debug tools
 #include <QDebug>
@@ -29,6 +31,9 @@ public:
 
     QImage loadImage(QString path);
     void renderImage(QImage image);
+
+    const QUrl url = QUrl("https://github.com/progmee/SLIC_App");
+    void redirectToBrowser();
 
 private:
     Ui::Window *ui;

@@ -5,6 +5,8 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets LinguistTools)
 
 qt_standard_project_setup()
 
+qt_add_resources(APP_RESOURCES resource/resource.qrc)
+
 qt_add_executable(SLIC_App
     WIN32 MACOSX_BUNDLE
     src/main.cpp
@@ -13,6 +15,8 @@ qt_add_executable(SLIC_App
     src/window.ui
     include/image.h
     src/image.cpp
+    ${APP_RESOURCES}
+    include/slic.h
 )
 
 qt_add_translations(

@@ -6,13 +6,14 @@
 
 using namespace std;
 
-void onActionOpenImage() {
-
-}
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    // Connect style to UI
+    QFile file(":/resource/customStyle.qss");
+    file.open(QFile::ReadOnly);
+    qApp->setStyleSheet(file.readAll());
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();

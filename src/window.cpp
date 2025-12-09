@@ -43,6 +43,11 @@ void Window::renderImage(QImage image) {
     ui->GraphicsView->fitInView(item, Qt::KeepAspectRatio);
 }
 
+void Window::redirectToBrowser() {
+    // Redirect to github
+    QDesktopServices::openUrl(url);
+}
+
 Window::Window(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Window)
@@ -53,7 +58,10 @@ Window::Window(QWidget *parent)
     scene = new QGraphicsScene();
     ui -> GraphicsView -> setScene(scene);
 
-    // Connection of event
+
+
+    // Connecting events
+    connect(ui->actionSupportUs, &QAction::triggered, this, &Window::redirectToBrowser);
     connect(ui->actionOpenImage, &QAction::triggered, this, &Window::onActionOpenImage);
 }
 

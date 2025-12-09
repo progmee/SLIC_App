@@ -1,0 +1,132 @@
+/* GLOBAL WIDGET STYLES */
+QWidget {
+    background: #f7f7f7;
+    color: #1a1a1a;
+    font-family: "Segoe UI Variable", "Segoe UI", sans-serif;
+    /* font-size removed */
+}
+
+/* BUTTONS */
+QPushButton {
+    background: rgba(108,160,255,0.15);
+    border: 1px solid rgba(108,160,255,0.40);
+    padding: 6px 14px;
+    border-radius: 8px;
+    color: #1a1a1a;
+}
+
+QPushButton:hover {
+    background: rgba(108,160,255,0.30);
+    border-color: rgba(108,160,255,0.55);
+}
+
+QPushButton:pressed {
+    background: rgba(108,160,255,0.45);
+    border-color: rgba(108,160,255,0.75);
+}
+
+/* LINE EDITS */
+QLineEdit {
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 6px;
+    border-radius: 8px;
+    color: #1a1a1a;
+}
+
+QLineEdit:focus {
+    border: 1px solid #6CA0FF;
+    background: rgba(108,160,255,0.15);
+}
+
+/* SCROLLBARS */
+QScrollBar:vertical {
+    background: transparent;
+    width: 10px;
+    margin: 2px;
+}
+
+QScrollBar::handle:vertical {
+    background: rgba(0,0,0,0.20);
+    min-height: 22px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: rgba(108,160,255,0.45);
+}
+
+QScrollBar::add-line,
+QScrollBar::sub-line {
+    height: 0px;
+}
+
+QScrollBar::add-page,
+QScrollBar::sub-page {
+    background: none;
+}
+
+/* MENUBAR */
+QMenuBar {
+    background: #ffffff;
+    border-bottom: 1px solid #dcdcdc;
+    padding: 4px;
+}
+
+QMenuBar::item {
+    background: transparent;
+    padding: 6px 12px;
+    color: #1a1a1a;
+}
+
+QMenuBar::item:selected {
+    background: rgba(108,160,255,0.20);
+}
+
+/* MENU */
+QMenu {
+    background: #ffffff;
+    border: 1px solid #cfcfcf;
+}
+
+QMenu::item {
+    padding: 6px 18px;
+    color: #1a1a1a;
+}
+
+QMenu::item:selected {
+    background: rgba(108,160,255,0.30);
+}
+
+/* GRAPHICS VIEW */
+QGraphicsView {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.12);
+}
+
+/* STATUS BAR */
+QStatusBar {
+    background: #f0f0f0;
+    border-top: 1px solid #dcdcdc;
+    color: #444444;
+}
+
+/* TOOLBAR */
+QToolBar {
+    background: #ffffff;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+/* TOOLBUTTONS */
+QToolButton {
+    background: transparent;
+    padding: 6px;
+    color: #1a1a1a;
+}
+
+QToolButton:hover {
+    background: rgba(108,160,255,0.25);
+}
+
+QToolButton:pressed {
+    background: rgba(108,160,255,0.45);
+}
