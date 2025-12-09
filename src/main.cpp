@@ -4,6 +4,12 @@
 #include <QLocale>
 #include <QTranslator>
 
+using namespace std;
+
+void onActionOpenImage() {
+
+}
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

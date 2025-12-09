@@ -7,15 +7,20 @@ qt_standard_project_setup()
 
 qt_add_executable(SLIC_App
     WIN32 MACOSX_BUNDLE
-    main.cpp
-    window.cpp
-    window.h
-    window.ui
+    src/main.cpp
+    src/window.cpp
+    include/window.h
+    src/window.ui
 )
 
 qt_add_translations(
     TARGETS SLIC_App
     TS_FILES SLIC_App_fr_FR.ts
+)
+
+target_include_directories(SLIC_App
+    PRIVATE
+        include
 )
 
 target_link_libraries(SLIC_App
