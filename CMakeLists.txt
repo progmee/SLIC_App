@@ -12,6 +12,7 @@ qt_add_executable(SLIC_App
     include/window.h
     src/window.ui
     include/image.h
+    src/image.cpp
 )
 
 qt_add_translations(

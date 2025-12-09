@@ -34,9 +34,13 @@ void Window::renderImage(QImage image) {
 
     // Convert image to pixmap
     QPixmap pixmap = QPixmap::fromImage(image);
-    scene->addPixmap(pixmap);
 
-    ui->GraphicsView->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
+    // Pixmap pointer from scene
+    QGraphicsPixmapItem* item = scene->addPixmap(pixmap);
+    scene->setSceneRect(item->boundingRect());
+
+    // Centralize image
+    ui->GraphicsView->fitInView(item, Qt::KeepAspectRatio);
 }
 
 Window::Window(QWidget *parent)

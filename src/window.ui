@@ -67,7 +67,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QGraphicsView" name="GraphicsView"/>
+        <widget class="ImageView" name="GraphicsView"/>
        </item>
       </layout>
      </widget>
@@ -155,7 +155,7 @@
         <number>0</number>
        </property>
        <item>
-        <layout class="QVBoxLayout" name="VerticalLayout">
+        <layout class="QVBoxLayout" name="VerticalLayout" stretch="0,0,0">
          <property name="spacing">
           <number>20</number>
          </property>
@@ -172,10 +172,16 @@
           <number>10</number>
          </property>
          <property name="bottomMargin">
-          <number>120</number>
+          <number>150</number>
          </property>
          <item>
           <widget class="QLabel" name="ParamsLabel">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>15</pointsize>
@@ -371,6 +377,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ImageView</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">image.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
