@@ -2,8 +2,11 @@
 #define WINDOW_H
 
 #include <QMainWindow>
-#include <QDebug>
 #include <QFileDialog>
+#include <QGraphicsScene>
+
+// Debug tools
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,6 +24,11 @@ private slots:
 public:
     Window(QWidget *parent = nullptr);
     ~Window();
+
+    QGraphicsScene* scene;
+
+    QImage loadImage(QString path);
+    void renderImage(QImage image);
 
 private:
     Ui::Window *ui;

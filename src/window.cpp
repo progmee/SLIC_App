@@ -2,7 +2,41 @@
 #include "ui_window.h"
 
 void Window::onActionOpenImage() {
-    qDebug() << "Button pressed";
+    QString imagePath = QFileDialog::getOpenFileName(
+        this,
+        "Open Image",
+        QString(),
+        "Images (*.png *.jpg *.jpeg *.bmp)");
+
+    QImage image = loadImage(imagePath);
+    renderImage(image); // Render image
+}
+
+QImage Window::loadImage(QString path) {
+    if (path.isEmpty()) {
+        qWarning() << "Incorrect path for loadImage.";
+        return QImage();
+    }
+
+    QImage image(path); // Initialize image
+
+    if (image.isNull()) {
+        qWarning() << "Failed to load image.";
+    }
+
+    return image;
+}
+
+void Window::renderImage(QImage image) {
+    if (image.isNull()) return;
+
+    scene->clear();
+
+    // Convert image to pixmap
+    QPixmap pixmap = QPixmap::fromImage(image);
+    scene->addPixmap(pixmap);
+
+    ui->GraphicsView->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
 }
 
 Window::Window(QWidget *parent)
@@ -11,10 +45,14 @@ Window::Window(QWidget *parent)
 {
     ui->setupUi(this); // Init UI
 
+    // Declare scene and connect with existing object
+    scene = new QGraphicsScene();
+    ui -> GraphicsView -> setScene(scene);
+
     // Connection of event
     connect(ui->actionOpenImage, &QAction::triggered, this, &Window::onActionOpenImage);
 }
-//QImage image("assets/images");
+
 Window::~Window()
 {
     delete ui;
