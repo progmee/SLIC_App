@@ -17,6 +17,7 @@ qt_add_executable(SLIC_App
     src/image.cpp
     ${APP_RESOURCES}
     include/slic.h
+    src/slic.cpp
 )
 
 qt_add_translations(
