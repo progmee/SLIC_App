@@ -1,6 +1,22 @@
 #include "image.h"
 
+void ImageView::renderImage(const QImage& image) {
+    if (image.isNull())
+        return;
+
+    scene->clear();
+
+    QPixmap pixmap = QPixmap::fromImage(image);
+    QGraphicsPixmapItem* item = scene->addPixmap(pixmap);
+
+    scene->setSceneRect(item->boundingRect());
+    fitInView(item, Qt::KeepAspectRatio);
+}
+
 ImageView::ImageView(QWidget* parent) : QGraphicsView(parent) {
+    scene = new QGraphicsScene(this);
+    setScene(scene); // Initialize scene
+
     // Disable scroll bars
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

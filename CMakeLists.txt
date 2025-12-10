@@ -5,7 +5,7 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets LinguistTools)
 
 qt_standard_project_setup()
 
-qt_add_resources(APP_RESOURCES resource/resource.qrc)
+qt_add_resources(APP_RESOURCES resource/resources.qrc)
 
 qt_add_executable(SLIC_App
     WIN32 MACOSX_BUNDLE
@@ -20,9 +20,14 @@ qt_add_executable(SLIC_App
     src/slic.cpp
 )
 
+qt_add_translations(SLIC_App TS_FILES SLIC_App_en_US.ts)
+
 qt_add_translations(
+    TS_FILES
+        TS_FILES SLIC_App_fr_FR.ts
+        TS_FILES SLIC_App_en_US.ts
+    QM_FILES_OUTPUT_VARIABLE QM_FILES
     TARGETS SLIC_App
-    TS_FILES SLIC_App_fr_FR.ts
 )
 
 target_include_directories(SLIC_App

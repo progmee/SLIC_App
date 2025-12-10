@@ -4,21 +4,20 @@
 #include <vector>
 #include <QImage>
 #include <QPoint>
+#include <QDebug>
 
 struct SLICConfig {
     SLICConfig() : showBoundaries(false),
         compactness(0),
         iterations(0),
-        superpixels(0),
         spacing(0) {};
 
-    SLICConfig(unsigned int __iterations, unsigned int __superpixels, double __compactness, bool __showBoundaries)
-        : showBoundaries(__showBoundaries), compactness(__compactness), iterations(__iterations), superpixels(__superpixels), spacing(0) {};
+    SLICConfig(unsigned int __iterations, unsigned int __spacing, double __compactness, bool __showBoundaries)
+        : showBoundaries(__showBoundaries), compactness(__compactness), iterations(__iterations), spacing(__spacing) {};
 
     bool showBoundaries;
     double compactness;
     unsigned int iterations;
-    unsigned int superpixels;
     unsigned int spacing;
 };
 
@@ -89,6 +88,7 @@ private:
     SLICConfig config;
 };
 
+QImage drawBoundaries(const SLICOutput& output, const QImage& original, QRgb colour);
 void convertRGBtoLAB(const QImage& image, std::vector<std::vector<LAB>>& output);
 
 #endif // SLIC_H

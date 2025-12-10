@@ -1,32 +1,43 @@
 #include "slic.h"
 
 std::vector<Center> SLIC::initializeCenters(const std::vector<std::vector<LAB>>& pixels) {
-    // Initialize centers
-    std::vector<Center> centers;
-
     int width = pixels[0].size();
     int height = pixels.size();
 
-    // Pixel spacing
-    config.spacing = sqrt((width * height) / config.superpixels);
+    // Initialize centers
+    std::vector<Center> centers;
 
-    for (int y = config.spacing/2; y < height; y += config.spacing) {
-        for (int x = config.spacing/2; x < width; x += config.spacing) {
-            // Avoid cases when created more superpixels than required
-            if (centers.size() >= config.superpixels)
-                break;
+    for (int y = config.spacing / 2; y < height; y += config.spacing) {
+        for (int x = config.spacing / 2; x < width; x += config.spacing) {
+            Center center(QPoint(x, y), pixels[y][x]);
 
-            centers.push_back(
-                Center(QPoint(x, y), pixels[y][x])
-            );
+            centers.push_back(center);
         }
-
-        // Avoid cases when created more superpixels than required
-        if (centers.size() >= config.superpixels)
-            break;
     }
 
     return centers;
+}
+
+QImage drawBoundaries(const SLICOutput& output, const QImage& original, QRgb colour) {
+    int height = original.height();
+    int width = original.width();
+
+    QImage result = original.copy();
+
+    for (int y = 1; y < height - 1; y++) {
+        for (int x = 1; x < width - 1; x++) {
+            int i = y * width + x;
+            int superPixel = output.labels[i];
+
+            // Check each side inside of 1D vector
+            if (output.labels[i + 1] != superPixel || output.labels[i - 1] != superPixel
+                || output.labels[i + width] != superPixel || output.labels[i - width] != superPixel) {
+                result.setPixel(x, y, colour);
+            }
+        }
+    }
+
+    return result;
 }
 
 double SLIC::distance(const Center& c1, const Center& c2) {
@@ -67,6 +78,7 @@ SLICOutput SLIC::apply(const QImage& image) {
 
     // Save pixels in LAB format
     std::vector<std::vector<LAB>> pixels(image.height(), std::vector<LAB>(image.width()));
+
     convertRGBtoLAB(image, pixels); // Convert image to pixels in LAB format
 
     // Initialize centers

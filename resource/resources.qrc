@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/resource">
         <file>customStyle.qss</file>
+        <file>i18n/SLIC_App_en_US.qm</file>
+        <file>i18n/SLIC_App_fr_FR.qm</file>
     </qresource>
 </RCC>

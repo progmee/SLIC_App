@@ -20,6 +20,8 @@ private:
 
     // Save last mouse position
     QPoint lastMousePos;
+
+    QGraphicsScene* scene;
 protected:
     // Mouse events
     void wheelEvent(QWheelEvent *event) override;
@@ -28,6 +30,8 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 public:
     ImageView(QWidget* parent = nullptr);
+
+    void renderImage(const QImage& image);
 };
 
 #endif // IMAGE_H

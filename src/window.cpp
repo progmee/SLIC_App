@@ -7,12 +7,31 @@ Window::Window(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Назначаем сцену графическому виджету
-    ui->GraphicsView->setScene(&scene);
+    qApp->installTranslator(&translator); // Install translator to application
 
-    // Подключаем сигналы
     connect(ui->actionSupportUs, &QAction::triggered, this, &Window::redirectToBrowser);
     connect(ui->actionOpenImage, &QAction::triggered, this, &Window::onActionOpenImage);
+
+    connect(ui->actionEnglish, &QAction::triggered, this, [this]() {
+        applyTranslation("en_US");
+    });
+    connect(ui->actionFrench, &QAction::triggered, this, [this]() {
+        applyTranslation("fr_FR");
+    });
+}
+
+void Window::applyTranslation(const QString& langCode) {
+    qApp -> removeTranslator(&translator);
+
+    QString path = translationsPath + langCode + ".qm";
+
+    if (translator.load(path)) {
+        qApp->installTranslator(&translator);
+        ui->retranslateUi(this);
+    }
+    else {
+        qWarning() << "Failed to load a translation";
+    }
 }
 
 Window::~Window()
@@ -27,13 +46,13 @@ QImage Window::loadImage(const QString& path)
         return QImage();
     }
 
-    QImage img(path);
+    QImage __image(path);
 
-    if (img.isNull()) {
+    if (__image.isNull()) {
         qWarning() << "Failed to load image:" << path;
     }
 
-    return img; // безопасно, без указателей
+    return __image;
 }
 
 void Window::onActionOpenImage()
@@ -51,21 +70,7 @@ void Window::onActionOpenImage()
         return;
     }
 
-    renderImage();
-}
-
-void Window::renderImage()
-{
-    if (image.isNull())
-        return;
-
-    scene.clear();
-
-    QPixmap pixmap = QPixmap::fromImage(image);
-    QGraphicsPixmapItem* item = scene.addPixmap(pixmap);
-
-    scene.setSceneRect(item->boundingRect());
-    ui->GraphicsView->fitInView(item, Qt::KeepAspectRatio);
+    ui->ImageViewer->renderImage(image);
 }
 
 void Window::redirectToBrowser()
@@ -77,7 +82,7 @@ SLICConfig Window::getConfig()
 {
     SLICConfig config(
         ui->IterationsBox->value(),
-        ui->PixelsBox->value(),
+        ui->SpacingBox->value(),
         ui->CompactnessBox->value(),
         ui->BoundariesBox->isChecked()
         );
@@ -97,6 +102,10 @@ void Window::on_ApplyButton_clicked()
 
     SLICOutput output = slic.apply(image);
 
-    // later: draw boundaries here
-}
+    if (!output.isValide() || !config.showBoundaries) return;
 
+    QRgb color = qRgb(0, 128, 0); // Color in black
+    QImage boundaries = drawBoundaries(output, image, color);
+
+    ui->ImageViewer->renderImage(boundaries);
+}

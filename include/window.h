@@ -6,10 +6,11 @@
 #include <QGraphicsScene>
 #include <QDesktopServices>
 #include <QUrl>
-
-#include "slic.h"
 #include <QImage>
 #include <QDebug>
+#include <QTranslator>
+
+#include "slic.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,24 +25,26 @@ class Window : public QMainWindow
 private slots:
     void onActionOpenImage();
     void on_ApplyButton_clicked();
-
 public:
     Window(QWidget *parent = nullptr);
     ~Window();
 
-    QImage loadImage(const QString& path);
-    SLICConfig getConfig();
-    void renderImage();
-    void redirectToBrowser();
-
 private:
     const QUrl url = QUrl("https://github.com/progmee/SLIC_App");
+    const QString translationsPath = ":/resource/i18n/SLIC_App_";
 
-    QGraphicsScene scene;    // убрал указатель
-    QImage image;            // убрал указатель
-    SLIC slic;               // убрал указатель
+    QGraphicsScene scene;
+    QImage image;
+    SLIC slic;
+    QTranslator translator;
 
     Ui::Window *ui;
+
+    QImage loadImage(const QString& path);
+    SLICConfig getConfig();
+    void redirectToBrowser();
+
+    void applyTranslation(const QString& langCode);
 };
 
 #endif // WINDOW_H

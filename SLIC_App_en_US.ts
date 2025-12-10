@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TS version="2.1" language="fr_FR">
+<TS version="2.1" language="en_US">
 <context>
     <name>Window</name>
 
@@ -12,23 +12,23 @@
     <!-- Controls -->
     <message>
         <source>Show boundaries</source>
-        <translation>Afficher les frontières</translation>
+        <translation>Show boundaries</translation>
     </message>
     <message>
         <source>Iterations</source>
-        <translation>Itérations</translation>
+        <translation>Iterations</translation>
     </message>
     <message>
         <source>Compactness</source>
-        <translation>Compacité</translation>
+        <translation>Compactness</translation>
     </message>
     <message>
         <source>Number of superpixels</source>
-        <translation>Nombre de superpixels</translation>
+        <translation>Number of superpixels</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>Appliquer</translation>
+        <translation>Apply</translation>
     </message>
 
 </context>
