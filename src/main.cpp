@@ -10,6 +10,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    a.setWindowIcon(QIcon(":/resource/icon-256.png"));
+
     // Connect style to UI
     QFile file(":/resource/customStyle.qss");
     file.open(QFile::ReadOnly);

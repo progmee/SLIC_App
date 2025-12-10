@@ -17,7 +17,14 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Window</string>
+   <string>SLIC App</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../icon.png</normaloff>../icon.png</iconset>
+  </property>
+  <property name="whatsThis">
+   <string>SLIC Superpixel Viewer</string>
   </property>
   <widget class="QWidget" name="CentralWidget">
    <property name="sizePolicy">
@@ -257,6 +264,12 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="toolTip">
+               <string>Display the boundaries of the computed superpixels over the image.</string>
+              </property>
+              <property name="toolTipDuration">
+               <number>5</number>
+              </property>
               <property name="text">
                <string>Show boundaries</string>
               </property>
@@ -282,6 +295,12 @@
                 <height>0</height>
                </size>
               </property>
+              <property name="toolTip">
+               <string>Display the boundaries of the computed superpixels over the image.</string>
+              </property>
+              <property name="toolTipDuration">
+               <number>5</number>
+              </property>
               <property name="layoutDirection">
                <enum>Qt::LayoutDirection::LeftToRight</enum>
               </property>
@@ -300,6 +319,12 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Number of refinement steps. Higher values produce more accurate superpixels but increase processing time.</string>
+              </property>
+              <property name="toolTipDuration">
+               <number>5</number>
               </property>
               <property name="text">
                <string>Iterations</string>
@@ -322,6 +347,12 @@
                 <kerning>true</kerning>
                </font>
               </property>
+              <property name="toolTip">
+               <string>Number of refinement steps. Higher values produce more accurate superpixels but increase processing time.</string>
+              </property>
+              <property name="toolTipDuration">
+               <number>5</number>
+              </property>
               <property name="minimum">
                <number>1</number>
               </property>
@@ -340,6 +371,13 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Controls the balance between color similarity and spatial proximity. 
+Higher values produce more uniformly shaped superpixels; lower values follow image edges more closely.</string>
+              </property>
+              <property name="toolTipDuration">
+               <number>5</number>
               </property>
               <property name="text">
                <string>Compactness</string>
@@ -366,6 +404,13 @@
                 <kerning>true</kerning>
                </font>
               </property>
+              <property name="toolTip">
+               <string>Controls the balance between color similarity and spatial proximity. 
+Higher values produce more uniformly shaped superpixels; lower values follow image edges more closely.</string>
+              </property>
+              <property name="toolTipDuration">
+               <number>5</number>
+              </property>
               <property name="minimum">
                <double>1.000000000000000</double>
               </property>
@@ -389,6 +434,13 @@
                <font>
                 <kerning>true</kerning>
                </font>
+              </property>
+              <property name="toolTip">
+               <string>Approximate size of each superpixel, expressed as the distance between cluster centers. 
+Smaller values generate more superpixels; larger values generate fewer, larger ones.</string>
+              </property>
+              <property name="toolTipDuration">
+               <number>5</number>
               </property>
               <property name="wrapping">
                <bool>true</bool>
@@ -422,6 +474,13 @@
                <font>
                 <kerning>true</kerning>
                </font>
+              </property>
+              <property name="toolTip">
+               <string>Approximate size of each superpixel, expressed as the distance between cluster centers. 
+Smaller values generate more superpixels; larger values generate fewer, larger ones.</string>
+              </property>
+              <property name="toolTipDuration">
+               <number>5</number>
               </property>
               <property name="text">
                <string>Spacing</string>
@@ -497,7 +556,6 @@
      <string>File</string>
     </property>
     <addaction name="actionOpenImage"/>
-    <addaction name="actionSave"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
