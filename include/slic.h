@@ -1,14 +1,17 @@
 #ifndef SLIC_H
 #define SLIC_H
 
-#include <algorithm>
 #include <vector>
-
 #include <QImage>
 #include <QPoint>
 
 struct SLICConfig {
-    SLICConfig(unsigned int __iterations, unsigned int __superpixels, double __compactness, bool __showBoundaries = false)
+    SLICConfig() : showBoundaries(false),
+        compactness(0),
+        iterations(0),
+        superpixels(0),
+        spacing(0) {};
+    SLICConfig(unsigned int __iterations, unsigned int __superpixels, double __compactness, bool __showBoundaries)
         : showBoundaries(__showBoundaries), compactness(__compactness), superpixels(__superpixels), iterations(__iterations) {};
 
     bool showBoundaries; // Flag to show boundaries
@@ -27,7 +30,7 @@ struct LAB {
     LAB() : l(0), a(0), b(0) {};
 
     // Set from RGB to LAB values
-    LAB& setFromRGB(int __r, int __g, int __b) {
+    void setFromRGB(int __r, int __g, int __b) {
         // Normalize each param
         double norm_r = static_cast<double>(__r) / 255;
         double norm_g = static_cast<double>(__g) / 255;
@@ -84,12 +87,12 @@ class SLIC {
 public:
     // Constructors and destructor
     SLIC();
-    SLIC(SLICConfig& __config) : config(__config){};
+    SLIC(const SLICConfig& __config) : config(__config){};
     ~SLIC();
 
     // Setters and getters
-    void setConfig(const SLICConfig& config);
-    SLICConfig& getConfig() const;
+    void setConfig(SLICConfig __config);
+    SLICConfig getConfig() const;
 
     // Apply SLIC algorithm for sellected image
     SLICOutput apply(const QImage& image);
@@ -98,7 +101,7 @@ private:
     double distance(const Center& c1, const Center& c2);
     std::vector<int> kMeans(const std::vector<std::vector<LAB>>& pixels, std::vector<Center> centers, unsigned int iterations = 1);
 
-    SLICConfig& config;
+    SLICConfig config;
 };
 
 void convertRGBtoLAB(const QImage& image, std::vector<std::vector<LAB>>& output);

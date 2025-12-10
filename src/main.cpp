@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
     QFile file(":/resource/customStyle.qss");
     file.open(QFile::ReadOnly);
     qApp->setStyleSheet(file.readAll());
+    file.close();
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();

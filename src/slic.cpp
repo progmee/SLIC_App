@@ -48,6 +48,17 @@ double SLIC::distance(const Center& c1, const Center& c2) {
     );
 }
 
+SLIC::SLIC() {};
+SLIC::~SLIC() {};
+
+void SLIC::setConfig(SLICConfig __config) {
+    config = __config;
+}
+
+SLICConfig SLIC::getConfig() const {
+    return config;
+}
+
 SLICOutput SLIC::apply(const QImage& image) {
     // Avoid null image
     if (image.isNull()) {
@@ -154,7 +165,6 @@ std::vector<int> SLIC::kMeans(const std::vector<std::vector<LAB>>& pixels, std::
 
     return labels;
 }
-
 
 void convertRGBtoLAB(const QImage& image, std::vector<std::vector<LAB>>& output) {
     for (int y = 0; y < image.height(); y++) {

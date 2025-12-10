@@ -7,6 +7,8 @@
 #include <QDesktopServices>
 #include <QUrl>
 
+#include "slic.h"
+
 // Debug tools
 #include <QDebug>
 
@@ -23,19 +25,23 @@ class Window : public QMainWindow
 private slots:
     void onActionOpenImage();
 
+    void on_ApplyButton_clicked();
+
 public:
     Window(QWidget *parent = nullptr);
     ~Window();
 
-    QGraphicsScene* scene;
-
     QImage loadImage(QString path);
     void renderImage(QImage image);
+    SLICConfig getConfig();
 
-    const QUrl url = QUrl("https://github.com/progmee/SLIC_App");
     void redirectToBrowser();
 
 private:
+    const QUrl url = QUrl("https://github.com/progmee/SLIC_App");
+
+    QGraphicsScene* scene;
+    SLIC* slic;
     Ui::Window *ui;
 };
 #endif // WINDOW_H

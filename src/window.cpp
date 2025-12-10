@@ -41,6 +41,7 @@ void Window::renderImage(QImage image) {
 
     // Centralize image
     ui->GraphicsView->fitInView(item, Qt::KeepAspectRatio);
+
 }
 
 void Window::redirectToBrowser() {
@@ -48,24 +49,40 @@ void Window::redirectToBrowser() {
     QDesktopServices::openUrl(url);
 }
 
+SLICConfig Window::getConfig() {
+    SLICConfig config(
+        ui->IterationsBox->value(),
+        ui->PixelsBox->value(),
+        (double) (ui->CompactnessBox->value()),
+        (double) (ui->BoundariesBox->isChecked())
+    );
+
+    return config;
+}
+
 Window::Window(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::Window)
-{
+    : QMainWindow(parent), ui(new Ui::Window), slic(new SLIC()), scene(new QGraphicsScene) {
     ui->setupUi(this); // Init UI
 
-    // Declare scene and connect with existing object
-    scene = new QGraphicsScene();
+    // Set scene for graphics view
     ui -> GraphicsView -> setScene(scene);
-
-
 
     // Connecting events
     connect(ui->actionSupportUs, &QAction::triggered, this, &Window::redirectToBrowser);
     connect(ui->actionOpenImage, &QAction::triggered, this, &Window::onActionOpenImage);
 }
 
-Window::~Window()
-{
-    delete ui;
+void Window::on_ApplyButton_clicked() {
+    // Get config from input fields
+    SLICConfig config = getConfig();
+
+    slic->setConfig(config); // Set config for slic algorithm
 }
+
+Window::~Window() {
+    // Remove objects
+    delete ui;
+    delete scene;
+    delete slic;
+}
+
