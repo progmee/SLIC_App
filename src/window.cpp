@@ -1,88 +1,102 @@
 #include "window.h"
 #include "ui_window.h"
 
-void Window::onActionOpenImage() {
-    QString imagePath = QFileDialog::getOpenFileName(
-        this,
-        "Open Image",
-        QString(),
-        "Images (*.png *.jpg *.jpeg *.bmp)");
+Window::Window(QWidget *parent)
+    : QMainWindow(parent),
+    ui(new Ui::Window)
+{
+    ui->setupUi(this);
 
-    QImage image = loadImage(imagePath);
-    renderImage(image); // Render image
+    // Назначаем сцену графическому виджету
+    ui->GraphicsView->setScene(&scene);
+
+    // Подключаем сигналы
+    connect(ui->actionSupportUs, &QAction::triggered, this, &Window::redirectToBrowser);
+    connect(ui->actionOpenImage, &QAction::triggered, this, &Window::onActionOpenImage);
 }
 
-QImage Window::loadImage(QString path) {
+Window::~Window()
+{
+    delete ui;
+}
+
+QImage Window::loadImage(const QString& path)
+{
     if (path.isEmpty()) {
         qWarning() << "Incorrect path for loadImage.";
         return QImage();
     }
 
-    QImage image(path); // Initialize image
+    QImage img(path);
 
-    if (image.isNull()) {
-        qWarning() << "Failed to load image.";
+    if (img.isNull()) {
+        qWarning() << "Failed to load image:" << path;
     }
 
-    return image;
+    return img; // безопасно, без указателей
 }
 
-void Window::renderImage(QImage image) {
-    if (image.isNull()) return;
+void Window::onActionOpenImage()
+{
+    QString path = QFileDialog::getOpenFileName(
+        this,
+        "Open Image",
+        QString(),
+        "Images (*.png *.jpg *.jpeg *.bmp)"
+        );
 
-    scene->clear();
+    image = loadImage(path);
 
-    // Convert image to pixmap
+    if (image.isNull()) {
+        return;
+    }
+
+    renderImage();
+}
+
+void Window::renderImage()
+{
+    if (image.isNull())
+        return;
+
+    scene.clear();
+
     QPixmap pixmap = QPixmap::fromImage(image);
+    QGraphicsPixmapItem* item = scene.addPixmap(pixmap);
 
-    // Pixmap pointer from scene
-    QGraphicsPixmapItem* item = scene->addPixmap(pixmap);
-    scene->setSceneRect(item->boundingRect());
-
-    // Centralize image
+    scene.setSceneRect(item->boundingRect());
     ui->GraphicsView->fitInView(item, Qt::KeepAspectRatio);
-
 }
 
-void Window::redirectToBrowser() {
-    // Redirect to github
+void Window::redirectToBrowser()
+{
     QDesktopServices::openUrl(url);
 }
 
-SLICConfig Window::getConfig() {
+SLICConfig Window::getConfig()
+{
     SLICConfig config(
         ui->IterationsBox->value(),
         ui->PixelsBox->value(),
-        (double) (ui->CompactnessBox->value()),
-        (double) (ui->BoundariesBox->isChecked())
-    );
+        ui->CompactnessBox->value(),
+        ui->BoundariesBox->isChecked()
+        );
 
     return config;
 }
 
-Window::Window(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::Window), slic(new SLIC()), scene(new QGraphicsScene) {
-    ui->setupUi(this); // Init UI
+void Window::on_ApplyButton_clicked()
+{
+    if (image.isNull()) {
+        qWarning() << "Cannot apply SLIC: no image loaded.";
+        return;
+    }
 
-    // Set scene for graphics view
-    ui -> GraphicsView -> setScene(scene);
-
-    // Connecting events
-    connect(ui->actionSupportUs, &QAction::triggered, this, &Window::redirectToBrowser);
-    connect(ui->actionOpenImage, &QAction::triggered, this, &Window::onActionOpenImage);
-}
-
-void Window::on_ApplyButton_clicked() {
-    // Get config from input fields
     SLICConfig config = getConfig();
+    slic.setConfig(config);
 
-    slic->setConfig(config); // Set config for slic algorithm
-}
+    SLICOutput output = slic.apply(image);
 
-Window::~Window() {
-    // Remove objects
-    delete ui;
-    delete scene;
-    delete slic;
+    // later: draw boundaries here
 }
 

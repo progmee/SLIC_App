@@ -11,7 +11,7 @@ std::vector<Center> SLIC::initializeCenters(const std::vector<std::vector<LAB>>&
     config.spacing = sqrt((width * height) / config.superpixels);
 
     for (int y = config.spacing/2; y < height; y += config.spacing) {
-        for (int x = config.spacing/2; x < height; x += config.spacing) {
+        for (int x = config.spacing/2; x < width; x += config.spacing) {
             // Avoid cases when created more superpixels than required
             if (centers.size() >= config.superpixels)
                 break;

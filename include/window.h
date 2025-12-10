@@ -8,8 +8,7 @@
 #include <QUrl>
 
 #include "slic.h"
-
-// Debug tools
+#include <QImage>
 #include <QDebug>
 
 QT_BEGIN_NAMESPACE
@@ -24,24 +23,25 @@ class Window : public QMainWindow
 
 private slots:
     void onActionOpenImage();
-
     void on_ApplyButton_clicked();
 
 public:
     Window(QWidget *parent = nullptr);
     ~Window();
 
-    QImage loadImage(QString path);
-    void renderImage(QImage image);
+    QImage loadImage(const QString& path);
     SLICConfig getConfig();
-
+    void renderImage();
     void redirectToBrowser();
 
 private:
     const QUrl url = QUrl("https://github.com/progmee/SLIC_App");
 
-    QGraphicsScene* scene;
-    SLIC* slic;
+    QGraphicsScene scene;    // убрал указатель
+    QImage image;            // убрал указатель
+    SLIC slic;               // убрал указатель
+
     Ui::Window *ui;
 };
+
 #endif // WINDOW_H
