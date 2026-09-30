@@ -1,6 +1,6 @@
 # SLIC Application (C++ / Qt)
 
-A lightweight Qt application designed for visualizing and experimenting with **SLIC (Simple Linear Iterative Clustering) superpixel segmentation**[cite: 5]. The project features adjustable parameters, real-time boundary rendering, and an intuitive image workspace[cite: 5].
+A lightweight Qt application designed for visualizing and experimenting with **SLIC (Simple Linear Iterative Clustering) superpixel segmentation**. The project features adjustable parameters, real-time boundary rendering, and an intuitive image workspace.
 
 ## Features
 
@@ -14,7 +14,7 @@ A lightweight Qt application designed for visualizing and experimenting with **S
 * `src/` — Core implementation files and application logic.
 * `include/` — Header files and class declarations.
 * `resource/` — Icons, styles, and other static assets.
-* `CMakeLists.txt` — CMake build configuration file[cite: 5].
+* `CMakeLists.txt` — CMake build configuration file.
 * `SLIC_App_en_US.ts` / `SLIC_App_fr_FR.ts` — Translation source files for internationalization[cite: 5].
 
 ## Building and Running
